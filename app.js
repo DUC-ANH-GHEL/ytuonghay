@@ -1,5 +1,7 @@
 // Import dữ liệu lá bài từ file riêng
 import { cards } from './data/cards.js';
+import { getRandomAffiliateLink } from './data/affiliate-links.js';
+import { updateAdContent, getAdAffiliateLink } from './data/ad-content.js';
 
 // Lưu trữ bộ sưu tập trong localStorage
 function getCollection() {
@@ -208,6 +210,11 @@ function playShuffleAnimation(callback) {
 }
 
 shuffleBtn.addEventListener('click', () => {
+  // Cập nhật nội dung quảng cáo và lấy link
+  updateAdContent();
+  const adLink = getAdAffiliateLink();
+  window.open(adLink, '_blank');
+  
   playShuffleAnimation(() => {
     const card = pickRandomCard();
     updatePreviewCard(card);
@@ -220,7 +227,15 @@ previewHeartBtn.addEventListener('click', togglePreviewHeart);
 // Initialize heart button state
 updatePreviewHeartState();
 
+// Khởi tạo nội dung quảng cáo
+updateAdContent();
+
 reshuffleBtn.addEventListener('click', () => {
+  // Cập nhật nội dung quảng cáo và lấy link
+  updateAdContent();
+  const adLink = getAdAffiliateLink();
+  window.open(adLink, '_blank');
+  
   playShuffleAnimation(() => {
     const card = pickRandomCard();
     showCard(card);

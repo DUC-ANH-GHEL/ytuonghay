@@ -605,3 +605,532 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 } 
+
+/* Ad containers */
+.ad-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  z-index: 10;
+  position: relative;
+}
+
+.ad-header {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ad-content {
+  max-width: 300px;
+  margin: 2rem auto;
+}
+
+.ad-sidebar {
+  position: fixed;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 160px;
+  height: 600px;
+  display: none;
+}
+
+.ad-footer {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Shopee Ad Banners */
+.ad-banner {
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ad-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Ad icon image styling */
+.ad-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.ad-banner:hover .ad-icon-img {
+  transform: scale(1.05);
+}
+
+/* Header Banner */
+.ad-shopee {
+  width: 100%;
+  max-width: 728px;
+  height: 120px;
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  color: white;
+}
+
+.ad-shopee-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 100%;
+}
+
+.ad-shopee-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ad-shopee-text {
+  flex: 1;
+}
+
+.ad-shopee-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.ad-shopee-product {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.ad-shopee-desc {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.ad-shopee-cta {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Content Square Banner */
+.ad-shopee-square {
+  width: 350px;
+  height: 300px;
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ff6b35 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.ad-shopee-square::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.ad-shopee-square-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem;
+  text-align: center;
+}
+
+.ad-shopee-square-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  animation: pulse 2s ease-in-out infinite;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.ad-shopee-square-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.ad-shopee-square-product {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ad-shopee-square-desc {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin-bottom: 1rem;
+}
+
+.ad-shopee-square-cta {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Sidebar Banner */
+.ad-shopee-sidebar {
+  width: 200px;
+  height: 600px;
+  background: linear-gradient(180deg, #ff6b35 0%, #f7931e 100%);
+  color: white;
+}
+
+.ad-shopee-sidebar-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 1rem;
+  text-align: center;
+}
+
+.ad-shopee-sidebar-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ad-shopee-sidebar-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.ad-shopee-sidebar-product {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.ad-shopee-sidebar-desc {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.ad-shopee-sidebar-cta {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Footer Banner */
+.ad-shopee-footer {
+  width: 100%;
+  max-width: 728px;
+  height: 120px;
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  color: white;
+}
+
+.ad-shopee-footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 100%;
+}
+
+.ad-shopee-footer-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ad-shopee-footer-text {
+  flex: 1;
+}
+
+.ad-shopee-footer-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.ad-shopee-footer-product {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.ad-shopee-footer-desc {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.ad-shopee-footer-cta {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive ads */
+@media (min-width: 1200px) {
+  .ad-sidebar {
+    display: flex;
+  }
+  
+  .main-container {
+    margin-right: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ad-header {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .ad-content {
+    max-width: 100%;
+    margin: 1rem 0;
+  }
+  
+  .ad-footer {
+    margin-top: 1rem;
+  }
+  
+  .ad-shopee {
+    height: 100px;
+  }
+  
+  .ad-shopee-content {
+    padding: 0 1rem;
+  }
+  
+  .ad-shopee-title {
+    font-size: 1rem;
+  }
+  
+  .ad-shopee-product {
+    font-size: 0.9rem;
+  }
+  
+  .ad-shopee-desc {
+    font-size: 0.8rem;
+  }
+  
+  .ad-shopee-cta {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .ad-shopee-square {
+    width: 100%;
+    max-width: 350px;
+    height: 250px;
+  }
+  
+  .ad-shopee-square-content {
+    padding: 1.5rem;
+  }
+  
+  .ad-shopee-square-icon {
+    font-size: 2.5rem;
+    width: 120px;
+    height: 120px;
+  }
+  
+  .ad-shopee-square-title {
+    font-size: 1.3rem;
+  }
+  
+  .ad-shopee-square-product {
+    font-size: 1.1rem;
+  }
+  
+  .ad-shopee-footer {
+    height: 100px;
+  }
+  
+  .ad-shopee-footer-content {
+    padding: 0 1rem;
+  }
+  
+  .ad-shopee-footer-title {
+    font-size: 1rem;
+  }
+  
+  .ad-shopee-footer-product {
+    font-size: 0.9rem;
+  }
+  
+  .ad-shopee-footer-desc {
+    font-size: 0.8rem;
+  }
+  
+  .ad-shopee-footer-cta {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ad-container {
+    margin: 0.5rem 0;
+  }
+  
+  .ad-shopee {
+    height: 80px;
+  }
+  
+  .ad-shopee-content {
+    padding: 0 0.8rem;
+  }
+  
+  .ad-shopee-icon {
+    font-size: 1.5rem;
+    width: 80px;
+    height: 80px;
+  }
+  
+  .ad-shopee-title {
+    font-size: 0.9rem;
+  }
+  
+  .ad-shopee-product {
+    font-size: 0.8rem;
+  }
+  
+  .ad-shopee-desc {
+    font-size: 0.7rem;
+  }
+  
+  .ad-shopee-cta {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+  }
+  
+  .ad-shopee-square {
+    height: 220px;
+  }
+  
+  .ad-shopee-square-content {
+    padding: 1rem;
+  }
+  
+  .ad-shopee-square-icon {
+    font-size: 2rem;
+    width: 100px;
+    height: 100px;
+  }
+  
+  .ad-shopee-square-title {
+    font-size: 1.1rem;
+  }
+  
+  .ad-shopee-square-product {
+    font-size: 1rem;
+  }
+  
+  .ad-shopee-square-desc {
+    font-size: 0.9rem;
+  }
+  
+  .ad-shopee-footer {
+    height: 80px;
+  }
+  
+  .ad-shopee-footer-content {
+    padding: 0 0.8rem;
+  }
+  
+  .ad-shopee-footer-icon {
+    font-size: 1.5rem;
+    width: 80px;
+    height: 80px;
+  }
+  
+  .ad-shopee-footer-title {
+    font-size: 0.9rem;
+  }
+  
+  .ad-shopee-footer-product {
+    font-size: 0.8rem;
+  }
+  
+  .ad-shopee-footer-desc {
+    font-size: 0.7rem;
+  }
+  
+  .ad-shopee-footer-cta {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+  }
+} 
