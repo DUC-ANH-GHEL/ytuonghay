@@ -5,7 +5,7 @@ export const adContent = {
     product: 'Kính mắt thời trang',
     description: 'Khám phá ngàn ưu đãi hấp dẫn',
     cta: 'Mua ngay',
-    icon: 'data/kinh.png',
+    icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
     link: 'https://s.shopee.vn/gFEWr4DF0'
   },
   content: {
@@ -13,7 +13,7 @@ export const adContent = {
     product: 'Kính mắt thời trang',
     description: 'Giảm đến 90%',
     cta: 'Xem ngay',
-    icon: 'data/kinh.png',
+    icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997400/kinh_j3e0kn.webp',
     link: 'https://s.shopee.vn/gFEWr4DF0'
   },
   sidebar: {
@@ -21,7 +21,7 @@ export const adContent = {
     product: 'Kính mắt thời trang',
     description: 'Miễn phí vận chuyển',
     cta: 'Khám phá',
-    icon: 'data/kinh.png',
+    icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
     link: 'https://s.shopee.vn/gFEWr4DF0'
   },
   footer: {
@@ -29,7 +29,7 @@ export const adContent = {
     product: 'Kính mắt thời trang',
     description: 'Hàng triệu sản phẩm, giá tốt nhất',
     cta: 'Truy cập ngay',
-    icon: 'data/kinh.png',
+    icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
     link: 'https://s.shopee.vn/gFEWr4DF0'
   }
 };
@@ -44,7 +44,7 @@ export const adVariants = [
       product: 'Kính mắt thời trang',
       description: 'Khám phá ngàn ưu đãi hấp dẫn',
       cta: 'Mua ngay',
-      icon: 'data/kinh.png',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997400/kinh_j3e0kn.webp',
       link: 'https://s.shopee.vn/gFEWr4DF0'
     },
     content: {
@@ -52,7 +52,7 @@ export const adVariants = [
       product: 'Kính mắt thời trang',
       description: 'Giảm đến 90%',
       cta: 'Xem ngay',
-      icon: 'data/kinh.png',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997400/kinh_j3e0kn.webp',
       link: 'https://s.shopee.vn/gFEWr4DF0'
     },
     sidebar: {
@@ -60,7 +60,7 @@ export const adVariants = [
       product: 'Kính mắt thời trang',
       description: 'Miễn phí vận chuyển',
       cta: 'Khám phá',
-      icon: 'data/kinh.png',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
       link: 'https://s.shopee.vn/gFEWr4DF0'
     },
     footer: {
@@ -68,7 +68,7 @@ export const adVariants = [
       product: 'Kính mắt thời trang',
       description: 'Hàng triệu sản phẩm, giá tốt nhất',
       cta: 'Truy cập ngay',
-      icon: 'data/kinh.png',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
       link: 'https://s.shopee.vn/gFEWr4DF0'
     }
   },
@@ -80,7 +80,7 @@ export const adVariants = [
       product: 'Kính mắt nam cao cấp',
       description: 'Phong cách đàn ông hiện đại',
       cta: 'Khám phá',
-      icon: 'data/kinh.png',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997400/kinh_j3e0kn.webp',
       link: 'https://s.shopee.vn/gFEWr4DF0'
     },
     content: {
@@ -88,7 +88,7 @@ export const adVariants = [
       product: 'Kính mắt nam cao cấp',
       description: 'Giảm giá sốc 70%',
       cta: 'Mua ngay',
-      icon: 'data/kinh.png',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997400/kinh_j3e0kn.webp',
       link: 'https://s.shopee.vn/gFEWr4DF0'
     },
     sidebar: {
@@ -96,7 +96,7 @@ export const adVariants = [
       product: 'Kính mắt nam cao cấp',
       description: 'Chất lượng đảm bảo',
       cta: 'Xem thêm',
-      icon: 'data/kinh.png',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
       link: 'https://s.shopee.vn/gFEWr4DF0'
     },
     footer: {
@@ -104,7 +104,7 @@ export const adVariants = [
       product: 'Kính mắt nam cao cấp',
       description: 'Phong cách đàn ông thành đạt',
       cta: 'Truy cập',
-      icon: 'data/kinh.png',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
       link: 'https://s.shopee.vn/gFEWr4DF0'
     }
   },
@@ -116,7 +116,7 @@ export const adVariants = [
       product: 'Kính mắt nữ thời trang',
       description: 'Làm đẹp mỗi ngày',
       cta: 'Mua sắm',
-      icon: 'data/kinh.png',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
       link: 'https://s.shopee.vn/gFEWr4DF0'
     },
     content: {
@@ -124,7 +124,7 @@ export const adVariants = [
       product: 'Kính mắt nữ thời trang',
       description: 'Giảm đến 80%',
       cta: 'Xem ngay',
-      icon: 'data/kinh.png',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997400/kinh_j3e0kn.webp',
       link: 'https://s.shopee.vn/gFEWr4DF0'
     },
     sidebar: {
@@ -132,7 +132,7 @@ export const adVariants = [
       product: 'Kính mắt nữ thời trang',
       description: 'Tặng kèm khăn lau',
       cta: 'Khám phá',
-      icon: 'data/kinh.png',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
       link: 'https://s.shopee.vn/gFEWr4DF0'
     },
     footer: {
@@ -140,15 +140,48 @@ export const adVariants = [
       product: 'Kính mắt nữ thời trang',
       description: 'Nâng tầm vẻ đẹp của bạn',
       cta: 'Truy cập ngay',
-      icon: 'data/kinh.png',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
       link: 'https://s.shopee.vn/gFEWr4DF0'
     }
   }
 ];
 
-// Hàm lấy nội dung quảng cáo random
+// Lưu lịch sử ad variant đã hiển thị trong localStorage
+function getRecentAdVariants() {
+  const recent = JSON.parse(localStorage.getItem('ad_recent_variants') || '[]');
+  const now = Date.now();
+  // Lọc bỏ các variant cũ hơn 5 phút (300000ms)
+  const filtered = recent.filter(item => now - item.timestamp < 300000);
+  if (filtered.length !== recent.length) {
+    localStorage.setItem('ad_recent_variants', JSON.stringify(filtered));
+  }
+  return filtered;
+}
+
+function saveRecentAdVariant(variantId) {
+  const recent = getRecentAdVariants();
+  recent.push({
+    id: variantId,
+    timestamp: Date.now()
+  });
+  localStorage.setItem('ad_recent_variants', JSON.stringify(recent));
+}
+
+// Hàm lấy nội dung quảng cáo random không lặp lại trong 5 phút
 export function getRandomAdContent() {
-  return adVariants[Math.floor(Math.random() * adVariants.length)];
+  const recentVariants = getRecentAdVariants();
+  const recentIds = recentVariants.map(item => item.id);
+  const availableVariants = adVariants.filter(variant => !recentIds.includes(variant.id));
+  let chosen;
+  if (availableVariants.length === 0) {
+    // Nếu tất cả đã hiển thị, reset lịch sử và random lại
+    localStorage.removeItem('ad_recent_variants');
+    chosen = adVariants[Math.floor(Math.random() * adVariants.length)];
+  } else {
+    chosen = availableVariants[Math.floor(Math.random() * availableVariants.length)];
+  }
+  saveRecentAdVariant(chosen.id);
+  return chosen;
 }
 
 // Hàm lấy nội dung quảng cáo theo ID
@@ -172,12 +205,14 @@ export function updateAdContent() {
   const headerDesc = document.querySelector('.ad-shopee-desc');
   const headerCta = document.querySelector('.ad-shopee-cta');
   const headerBanner = document.querySelector('.ad-shopee');
+  const headerIcon = document.querySelector('.ad-shopee-icon');
   
   if (headerTitle) headerTitle.textContent = randomAd.header.title;
   if (headerProduct) headerProduct.textContent = randomAd.header.product;
   if (headerDesc) headerDesc.textContent = randomAd.header.description;
   if (headerCta) headerCta.textContent = randomAd.header.cta;
   if (headerBanner) headerBanner.href = randomAd.header.link;
+  if (headerIcon) headerIcon.innerHTML = `<img src="${randomAd.header.icon}" alt="Shopee" class="ad-icon-img">`;
   
   // Cập nhật content
   const contentTitle = document.querySelector('.ad-shopee-square-title');
@@ -185,12 +220,14 @@ export function updateAdContent() {
   const contentDesc = document.querySelector('.ad-shopee-square-desc');
   const contentCta = document.querySelector('.ad-shopee-square-cta');
   const contentBanner = document.querySelector('.ad-shopee-square');
+  const contentIcon = document.querySelector('.ad-shopee-square-icon');
   
   if (contentTitle) contentTitle.textContent = randomAd.content.title;
   if (contentProduct) contentProduct.textContent = randomAd.content.product;
   if (contentDesc) contentDesc.textContent = randomAd.content.description;
   if (contentCta) contentCta.textContent = randomAd.content.cta;
   if (contentBanner) contentBanner.href = randomAd.content.link;
+  if (contentIcon) contentIcon.innerHTML = `<img src="${randomAd.content.icon}" alt="Shopee" class="ad-icon-img">`;
   
   // Cập nhật sidebar
   const sidebarTitle = document.querySelector('.ad-shopee-sidebar-title');
@@ -198,12 +235,14 @@ export function updateAdContent() {
   const sidebarDesc = document.querySelector('.ad-shopee-sidebar-desc');
   const sidebarCta = document.querySelector('.ad-shopee-sidebar-cta');
   const sidebarBanner = document.querySelector('.ad-shopee-sidebar');
+  const sidebarIcon = document.querySelector('.ad-shopee-sidebar-icon');
   
   if (sidebarTitle) sidebarTitle.textContent = randomAd.sidebar.title;
   if (sidebarProduct) sidebarProduct.textContent = randomAd.sidebar.product;
   if (sidebarDesc) sidebarDesc.textContent = randomAd.sidebar.description;
   if (sidebarCta) sidebarCta.textContent = randomAd.sidebar.cta;
   if (sidebarBanner) sidebarBanner.href = randomAd.sidebar.link;
+  if (sidebarIcon) sidebarIcon.innerHTML = `<img src="${randomAd.sidebar.icon}" alt="Shopee" class="ad-icon-img">`;
   
   // Cập nhật footer
   const footerTitle = document.querySelector('.ad-shopee-footer-title');
@@ -211,10 +250,12 @@ export function updateAdContent() {
   const footerDesc = document.querySelector('.ad-shopee-footer-desc');
   const footerCta = document.querySelector('.ad-shopee-footer-cta');
   const footerBanner = document.querySelector('.ad-shopee-footer');
+  const footerIcon = document.querySelector('.ad-shopee-footer-icon');
   
   if (footerTitle) footerTitle.textContent = randomAd.footer.title;
   if (footerProduct) footerProduct.textContent = randomAd.footer.product;
   if (footerDesc) footerDesc.textContent = randomAd.footer.description;
   if (footerCta) footerCta.textContent = randomAd.footer.cta;
   if (footerBanner) footerBanner.href = randomAd.footer.link;
+  if (footerIcon) footerIcon.innerHTML = `<img src="${randomAd.footer.icon}" alt="Shopee" class="ad-icon-img">`;
 } 
