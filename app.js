@@ -212,8 +212,9 @@ function playShuffleAnimation(callback) {
 shuffleBtn.addEventListener('click', () => {
   // Cập nhật nội dung quảng cáo và lấy link
   updateAdContent();
-  const adLink = getAdAffiliateLink();
-  window.open(adLink, '_blank');
+  // tạm thời chưa bật quảng cáo ở nút này để thu hút người dùng đã
+  // const adLink = getAdAffiliateLink();
+  // window.open(adLink, '_blank');
   
   playShuffleAnimation(() => {
     const card = pickRandomCard();
