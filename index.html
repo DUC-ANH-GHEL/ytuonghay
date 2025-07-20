@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CreatiDeck - Bốc Một Lá</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-anim"></div>
+  <main class="main-container">
+    <h1 class="site-title">CreatiDeck</h1>
+    <button id="draw-card-btn" class="draw-btn">🃏 Bốc 1 lá bài</button>
+    <p class="caption">Đang bí ý tưởng? Để bộ bài khai sáng bạn!</p>
+    <button id="show-collection-btn" class="collection-btn">❤️ Bộ sưu tập</button>
+  </main>
+
+  <!-- Card Modal -->
+  <div id="card-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="card-flip">
+        <div class="card card-back"></div>
+        <div class="card-front">
+          <div class="card"></div>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button id="reshuffle-btn" class="action-btn">🔁 Bốc lại</button>
+        <button id="share-btn" class="action-btn">📤 Chia sẻ</button>
+        <button id="save-btn" class="action-btn">❤️ Lưu</button>
+      </div>
+      <button id="close-modal" class="close-modal">✖</button>
+    </div>
+  </div>
+
+  <!-- Collection Modal -->
+  <div id="collection-modal" class="modal hidden">
+    <div class="modal-content collection-content">
+      <h2>Bộ sưu tập của tôi</h2>
+      <div class="tag-filter">
+        <button class="tag-btn" data-tag="all">Tất cả</button>
+        <button class="tag-btn" data-tag="mở đầu">Mở đầu</button>
+        <button class="tag-btn" data-tag="cảm xúc">Cảm xúc</button>
+        <button class="tag-btn" data-tag="sốc">Sốc</button>
+      </div>
+      <div id="collection-grid" class="collection-grid"></div>
+      <button id="close-collection" class="close-modal">✖</button>
+    </div>
+  </div>
+
+  <div class="deck-shuffle" id="deck-shuffle" style="display:none;"></div>
+  <script src="app.js" type="module"></script>
+</body>
+</html> 
