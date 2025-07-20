@@ -77,5 +77,42 @@ export const cards = [
       note: 'Những câu chuyện kể về 1 người vượt qua nghịch cảnh sẽ truyền cảm hứng và thu hút mọi người. Chú ý đến tính xác thực của các câu chuyện',
       tags: ['cảm xúc']
     },
-    
+    {
+      id: '7',
+      img: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+      title: 'Sản phẩm thay đổi cuộc sống',
+      desc: 'Đưa tên sản phẩm/dịch vụ vào câu mở đầu và nói về việc nó đã thay đổi cuộc sống của bạn/người khác',
+      examples: [
+        'Chiếc máy hút bụi với công nghệ hiện đại này đã thay đổi cuộc sống của chúng mình.',
+        'Khóa học cấp tốc tiếng anh dành cho người lớn sẽ giúp bạn thành thạo tiếng Anh sau 03 tháng.',
+        'Ghế massage thương hiệu A này sẽ giúp cơ thể bạn hết mệt mỏi sau một ngày làm việc..'
+      ],
+      note: 'Đơn giản trực quan, đề cập thẳng đến vấn đề và thông tin cho người xem.',
+      tags: ['cảm xúc']
+    },
+    {
+      id: '8',
+      img: 'https://cdn-icons-png.flaticon.com/512/3135/3135792.png',
+      title: 'Tư duy khó sang dễ',
+      desc: 'Xác thực sự hoài nghi/thờ ơ ban đầu của khán giả để xây dựng niềm tin, trước khi chuyển đổi tư duy của họ từ khó sang dễ.',
+      examples: [
+        'Tôi chưa bao giờ bận tâm đến thói quen buổi sáng... Cho đến khi thói quen đơn giairn điên rồ này đã thay đổi mọi thứ.',
+        'Đầu tư chứng khoán khiến tôi cảm thấy quá rủi ro... Nhưng ứng dụng đơn giản này đã giúp tôi bắt đầu một cách an toàn.'
+      ],
+      note: 'Hiểu rõ được khán giả bạn đang hướng tới, nắm được tư duy, niềm tin hạn chế đang tồn tại trong họ từ trước đến nay để phá bỏ nó',
+      tags: ['cảm xúc']
+    },
+    {
+      id: '9',
+      img: 'https://cdn-icons-png.flaticon.com/512/3135/3135773.png',
+      title: 'Sự kiện tiêu cực bất ngờ',
+      desc: 'Mọi thứ tưởng chừng đang thuận lợi nhưng có một điều bất ngờ xảy ra.',
+      examples: [
+        'Tôi từng là một vận động viên ưu tú... cho đến khi sự cố gây sốc này đã thay đổi mọi thứ.',
+        'Trong nhiều năm, tôi đã rao giảng về tự do tài chính nhưng sau đó tôi đã đánh mất tất cả chỉ trong chốc lát.',
+        'Anh B đã xây dựng một đế chế bất động sản từ con số không, rồi mất tất cả trong một vụ lừa đảo không thể tưởng tượng được.'
+      ],
+      note: 'Yếu tố bất ngờ không thể đoán trước sẽ kích thích sự tò mò muốn tìm hiểu thêm. Đây là một cách kể chuyện vô cùng mạnh mẽ.',
+      tags: ['cảm xúc']
+    },
   ]; 
