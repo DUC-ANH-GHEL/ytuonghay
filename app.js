@@ -9,6 +9,27 @@ function saveCollection(arr) {
   localStorage.setItem('creatideck_collection', JSON.stringify(arr));
 }
 
+// Lưu trữ lịch sử card đã hiển thị trong 5 phút
+function getRecentCards() {
+  const recent = JSON.parse(localStorage.getItem('creatideck_recent') || '[]');
+  const now = Date.now();
+  // Lọc bỏ các card cũ hơn 5 phút (300000ms)
+  const filtered = recent.filter(item => now - item.timestamp < 300000);
+  if (filtered.length !== recent.length) {
+    localStorage.setItem('creatideck_recent', JSON.stringify(filtered));
+  }
+  return filtered;
+}
+
+function saveRecentCard(cardId) {
+  const recent = getRecentCards();
+  recent.push({
+    id: cardId,
+    timestamp: Date.now()
+  });
+  localStorage.setItem('creatideck_recent', JSON.stringify(recent));
+}
+
 // DOM
 const shuffleBtn = document.getElementById('shuffle-btn');
 const previewCard = document.getElementById('preview-card');
@@ -34,7 +55,25 @@ let currentCard = null;
 let shuffleTimeout = null;
 
 function pickRandomCard() {
-  return cards[Math.floor(Math.random() * cards.length)];
+  const recentCards = getRecentCards();
+  const recentIds = recentCards.map(item => item.id);
+  
+  // Lọc ra các card chưa được hiển thị trong 5 phút gần đây
+  const availableCards = cards.filter(card => !recentIds.includes(card.id));
+  
+  // Nếu tất cả card đã được hiển thị, reset lịch sử và cho phép random lại
+  if (availableCards.length === 0) {
+    localStorage.removeItem('creatideck_recent');
+    return cards[Math.floor(Math.random() * cards.length)];
+  }
+  
+  // Random từ các card có sẵn
+  const randomCard = availableCards[Math.floor(Math.random() * availableCards.length)];
+  
+  // Lưu card này vào lịch sử
+  saveRecentCard(randomCard.id);
+  
+  return randomCard;
 }
 
 function updatePreviewCard(card) {
