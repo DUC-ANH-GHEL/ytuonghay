@@ -38,12 +38,10 @@ body {
 
 /* Main container */
 .main-container {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 100vh;
   padding: 2rem 1rem;
 }
@@ -1133,4 +1131,46 @@ body {
     padding: 0.3rem 0.6rem;
     font-size: 0.7rem;
   }
+} 
+
+/* Swipe stack hiệu ứng */
+.swipe-stack {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 0 auto;
+  min-height: 420px;
+  pointer-events: none;
+  margin-bottom: 3.5rem;
+}
+.preview-card,
+.preview-card-next {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  min-height: 350px;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: rgba(255,255,255,0.95);
+  transition: transform 0.35s cubic-bezier(.4,2,.6,1), opacity 0.25s;
+  pointer-events: auto;
+}
+.preview-card {
+  z-index: 2;
+}
+.preview-card-next {
+  z-index: 1;
+  transform: scale(0.95) translateY(20px);
+  opacity: 0.7;
+  filter: blur(1px);
+  pointer-events: none;
+}
+.swipe-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  z-index: 0;
+  position: static;
 } 

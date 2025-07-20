@@ -44,20 +44,13 @@
     <h1 class="site-title">Ý TƯỞNG 3s ĐẦU</h1>
     
     <!-- Preview Card -->
-    <div class="preview-card" id="preview-card">
-      <button class="heart-btn" id="preview-heart-btn">🤍</button>
-      <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" alt="Card Image" class="card-img card-img-top">
-      <h2 class="card-title card-title-main">How to?</h2>
-      <p class="card-desc card-desc-main">Cách, làm thế nào để làm một điều gì đó.</p>
-      <div class="card-examples-block">
-        <div class="card-examples-title"><b>Ví dụ:</b></div>
-        <ul class="card-examples">
-          <li>Cách để xây dựng 01 trang web chuyên nghiệp từ đầu chỉ trong 30 phút.</li>
-          <li>Cách để học một ngoại ngữ bất kì trong vòng 03 tháng.</li>
-          <li>Làm thế nào để xây một kênh Tiktok đạt 100.000 người theo dõi.</li>
-        </ul>
-      </div>
-      <div class="card-note">Thu hút sự chú ý người xem ngay lập tức bằng câu hỏi và sự tò mò, cho người xem biết được giá trị sẽ nhận đuôc</div>
+    <div class="swipe-stack">
+      <div class="preview-card" id="preview-card"></div>
+      <div class="preview-card preview-card-next" id="preview-card-next"></div>
+    </div>
+    <div class="swipe-actions">
+      <button id="shuffle-btn" class="shuffle-btn">Tráo bài</button>
+      <button id="show-collection-btn" class="collection-btn">❤️ Bộ sưu tập</button>
     </div>
     
     <!-- Quảng cáo giữa nội dung -->
@@ -73,8 +66,6 @@
       </a>
     </div> -->
     
-    <button id="shuffle-btn" class="shuffle-btn">Tráo bài</button>
-    <button id="show-collection-btn" class="collection-btn">❤️ Bộ sưu tập</button>
     
     <!-- Quảng cáo sidebar (desktop) -->
     <div class="ad-container ad-sidebar">
@@ -140,5 +131,13 @@
 
   <div class="deck-shuffle" id="deck-shuffle" style="display:none;"></div>
   <script src="app.js" type="module"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+      document.body.addEventListener('copy', function(e) { e.preventDefault(); });
+      document.body.addEventListener('cut', function(e) { e.preventDefault(); });
+      document.body.addEventListener('paste', function(e) { e.preventDefault(); });
+    });
+  </script>
 </body>
 </html> 

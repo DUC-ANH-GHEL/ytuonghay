@@ -195,10 +195,33 @@ export function getAdAffiliateLink() {
   return randomAd.header.link; // Lấy link từ header làm mặc định
 }
 
+// Hàm lấy biến thể quảng cáo hiện tại (ưu tiên localStorage, hợp lệ trong 5 phút)
+function getCurrentAdVariant() {
+  const current = JSON.parse(localStorage.getItem('ad_current_variant') || 'null');
+  const now = Date.now();
+  if (current && now - current.timestamp < 300000) {
+    const variant = adVariants.find(v => v.id === current.id);
+    if (variant) return variant;
+  }
+  return null;
+}
+
+// Hàm random và lưu lại biến thể quảng cáo hiện tại
+function pickAndSaveAdVariant() {
+  const variant = getRandomAdContent();
+  localStorage.setItem('ad_current_variant', JSON.stringify({id: variant.id, timestamp: Date.now()}));
+  return variant;
+}
+
 // Hàm cập nhật nội dung quảng cáo
-export function updateAdContent() {
-  const randomAd = getRandomAdContent();
-  
+export function updateAdContent(forceNew = false) {
+  let ad;
+  if (forceNew) {
+    ad = pickAndSaveAdVariant();
+  } else {
+    ad = getCurrentAdVariant();
+    if (!ad) ad = pickAndSaveAdVariant();
+  }
   // Cập nhật header
   const headerTitle = document.querySelector('.ad-shopee-title');
   const headerProduct = document.querySelector('.ad-shopee-product');
@@ -206,14 +229,12 @@ export function updateAdContent() {
   const headerCta = document.querySelector('.ad-shopee-cta');
   const headerBanner = document.querySelector('.ad-shopee');
   const headerIcon = document.querySelector('.ad-shopee-icon');
-  
-  if (headerTitle) headerTitle.textContent = randomAd.header.title;
-  if (headerProduct) headerProduct.textContent = randomAd.header.product;
-  if (headerDesc) headerDesc.textContent = randomAd.header.description;
-  if (headerCta) headerCta.textContent = randomAd.header.cta;
-  if (headerBanner) headerBanner.href = randomAd.header.link;
-  if (headerIcon) headerIcon.innerHTML = `<img src="${randomAd.header.icon}" alt="Shopee" class="ad-icon-img">`;
-  
+  if (headerTitle) headerTitle.textContent = ad.header.title;
+  if (headerProduct) headerProduct.textContent = ad.header.product;
+  if (headerDesc) headerDesc.textContent = ad.header.description;
+  if (headerCta) headerCta.textContent = ad.header.cta;
+  if (headerBanner) headerBanner.href = ad.header.link;
+  if (headerIcon) headerIcon.innerHTML = `<img src="${ad.header.icon}" alt="Shopee" class="ad-icon-img">`;
   // Cập nhật content
   const contentTitle = document.querySelector('.ad-shopee-square-title');
   const contentProduct = document.querySelector('.ad-shopee-square-product');
@@ -221,14 +242,12 @@ export function updateAdContent() {
   const contentCta = document.querySelector('.ad-shopee-square-cta');
   const contentBanner = document.querySelector('.ad-shopee-square');
   const contentIcon = document.querySelector('.ad-shopee-square-icon');
-  
-  if (contentTitle) contentTitle.textContent = randomAd.content.title;
-  if (contentProduct) contentProduct.textContent = randomAd.content.product;
-  if (contentDesc) contentDesc.textContent = randomAd.content.description;
-  if (contentCta) contentCta.textContent = randomAd.content.cta;
-  if (contentBanner) contentBanner.href = randomAd.content.link;
-  if (contentIcon) contentIcon.innerHTML = `<img src="${randomAd.content.icon}" alt="Shopee" class="ad-icon-img">`;
-  
+  if (contentTitle) contentTitle.textContent = ad.content.title;
+  if (contentProduct) contentProduct.textContent = ad.content.product;
+  if (contentDesc) contentDesc.textContent = ad.content.description;
+  if (contentCta) contentCta.textContent = ad.content.cta;
+  if (contentBanner) contentBanner.href = ad.content.link;
+  if (contentIcon) contentIcon.innerHTML = `<img src="${ad.content.icon}" alt="Shopee" class="ad-icon-img">`;
   // Cập nhật sidebar
   const sidebarTitle = document.querySelector('.ad-shopee-sidebar-title');
   const sidebarProduct = document.querySelector('.ad-shopee-sidebar-product');
@@ -236,14 +255,12 @@ export function updateAdContent() {
   const sidebarCta = document.querySelector('.ad-shopee-sidebar-cta');
   const sidebarBanner = document.querySelector('.ad-shopee-sidebar');
   const sidebarIcon = document.querySelector('.ad-shopee-sidebar-icon');
-  
-  if (sidebarTitle) sidebarTitle.textContent = randomAd.sidebar.title;
-  if (sidebarProduct) sidebarProduct.textContent = randomAd.sidebar.product;
-  if (sidebarDesc) sidebarDesc.textContent = randomAd.sidebar.description;
-  if (sidebarCta) sidebarCta.textContent = randomAd.sidebar.cta;
-  if (sidebarBanner) sidebarBanner.href = randomAd.sidebar.link;
-  if (sidebarIcon) sidebarIcon.innerHTML = `<img src="${randomAd.sidebar.icon}" alt="Shopee" class="ad-icon-img">`;
-  
+  if (sidebarTitle) sidebarTitle.textContent = ad.sidebar.title;
+  if (sidebarProduct) sidebarProduct.textContent = ad.sidebar.product;
+  if (sidebarDesc) sidebarDesc.textContent = ad.sidebar.description;
+  if (sidebarCta) sidebarCta.textContent = ad.sidebar.cta;
+  if (sidebarBanner) sidebarBanner.href = ad.sidebar.link;
+  if (sidebarIcon) sidebarIcon.innerHTML = `<img src="${ad.sidebar.icon}" alt="Shopee" class="ad-icon-img">`;
   // Cập nhật footer
   const footerTitle = document.querySelector('.ad-shopee-footer-title');
   const footerProduct = document.querySelector('.ad-shopee-footer-product');
@@ -251,11 +268,10 @@ export function updateAdContent() {
   const footerCta = document.querySelector('.ad-shopee-footer-cta');
   const footerBanner = document.querySelector('.ad-shopee-footer');
   const footerIcon = document.querySelector('.ad-shopee-footer-icon');
-  
-  if (footerTitle) footerTitle.textContent = randomAd.footer.title;
-  if (footerProduct) footerProduct.textContent = randomAd.footer.product;
-  if (footerDesc) footerDesc.textContent = randomAd.footer.description;
-  if (footerCta) footerCta.textContent = randomAd.footer.cta;
-  if (footerBanner) footerBanner.href = randomAd.footer.link;
-  if (footerIcon) footerIcon.innerHTML = `<img src="${randomAd.footer.icon}" alt="Shopee" class="ad-icon-img">`;
+  if (footerTitle) footerTitle.textContent = ad.footer.title;
+  if (footerProduct) footerProduct.textContent = ad.footer.product;
+  if (footerDesc) footerDesc.textContent = ad.footer.description;
+  if (footerCta) footerCta.textContent = ad.footer.cta;
+  if (footerBanner) footerBanner.href = ad.footer.link;
+  if (footerIcon) footerIcon.innerHTML = `<img src="${ad.footer.icon}" alt="Shopee" class="ad-icon-img">`;
 } 

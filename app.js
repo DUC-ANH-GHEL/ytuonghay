@@ -78,9 +78,8 @@ function pickRandomCard() {
   return randomCard;
 }
 
-function updatePreviewCard(card) {
-  currentCard = card;
-  previewCard.innerHTML = `
+function updatePreviewCard(card, el = previewCard) {
+  el.innerHTML = `
     <button class="heart-btn" id="preview-heart-btn">🤍</button>
     <img src="${card.image || card.img}" alt="Card Image" class="card-img card-img-top">
     <h2 class="card-title card-title-main">${card.title}</h2>
@@ -93,13 +92,12 @@ function updatePreviewCard(card) {
     </div>
     ${card.note ? `<div class="card-note">${card.note}</div>` : ''}
   `;
-  
-  // Re-attach heart button event listener
-  const newHeartBtn = previewCard.querySelector('#preview-heart-btn');
-  newHeartBtn.addEventListener('click', togglePreviewHeart);
-  
-  // Update heart button state
-  updatePreviewHeartState();
+  // Chỉ gắn event heart cho lá trên cùng
+  if (el.id === 'preview-card') {
+    const newHeartBtn = el.querySelector('#preview-heart-btn');
+    newHeartBtn.addEventListener('click', togglePreviewHeart);
+    updatePreviewHeartState();
+  }
 }
 
 function updatePreviewHeartState() {
@@ -209,77 +207,128 @@ function playShuffleAnimation(callback) {
   }, 1200);
 }
 
-shuffleBtn.addEventListener('click', () => {
-  // Cập nhật nội dung quảng cáo và lấy link
-  updateAdContent();
-  // tạm thời chưa bật quảng cáo ở nút này để thu hút người dùng đã
-  // const adLink = getAdAffiliateLink();
-  // window.open(adLink, '_blank');
-  
-  playShuffleAnimation(() => {
-    const card = pickRandomCard();
-    updatePreviewCard(card);
-  });
-});
+// Quản lý bộ bài (deck) cho swipe
+let deck = [...cards.map(card => card.id)];
 
-// Add event listener for preview heart button
-previewHeartBtn.addEventListener('click', togglePreviewHeart);
+function getCardById(id) {
+  return cards.find(card => card.id == id);
+}
 
-// Initialize heart button state
-updatePreviewHeartState();
-
-// Khởi tạo nội dung quảng cáo
-updateAdContent();
-
-reshuffleBtn.addEventListener('click', () => {
-  // Cập nhật nội dung quảng cáo và lấy link
-  updateAdContent();
-  const adLink = getAdAffiliateLink();
-  window.open(adLink, '_blank');
-  
-  playShuffleAnimation(() => {
-    const card = pickRandomCard();
-    showCard(card);
-  });
-});
-
-closeModal.addEventListener('click', () => {
-  cardModal.classList.add('hidden');
-});
-
-saveBtn.addEventListener('click', () => {
-  if (!currentCard) return;
-  let collection = getCollection();
-  if (!collection.find(c => c.id === currentCard.id)) {
-    collection.push(currentCard);
-    saveCollection(collection);
-    updateSaveBtn();
+function renderTopCards() {
+  const card = getCardById(deck[0]);
+  const nextCard = getCardById(deck[1]);
+  const previewCardEl = document.getElementById('preview-card');
+  const previewCardNextEl = document.getElementById('preview-card-next');
+  if (card) {
+    updatePreviewCard(card, previewCardEl);
+    currentCard = card; // Đảm bảo currentCard luôn là lá trên cùng
   }
-});
+  if (nextCard) updatePreviewCard(nextCard, previewCardNextEl);
+  else if (previewCardNextEl) previewCardNextEl.innerHTML = '';
 
-showCollectionBtn.addEventListener('click', () => {
-  renderCollection('all');
-  collectionModal.classList.remove('hidden');
-});
+  // Đảm bảo swipe-stack đủ cao cho card dài nhất
+  setTimeout(() => {
+    const stack = document.querySelector('.swipe-stack');
+    if (stack && previewCardEl) {
+      const cardHeight = previewCardEl.offsetHeight;
+      stack.style.minHeight = (cardHeight + 60) + 'px'; // 60px cho nút
+    }
+  }, 0);
+}
 
-closeCollection.addEventListener('click', () => {
-  collectionModal.classList.add('hidden');
-});
+// Swipe gesture cho preview card
+let startX = 0;
+let currentX = 0;
+let isDragging = false;
 
-tagBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    tagBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderCollection(btn.dataset.tag);
-  });
-});
+function onDragStart(e) {
+  isDragging = true;
+  startX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+  previewCard.style.transition = '';
+}
+
+function onDragMove(e) {
+  if (!isDragging) return;
+  currentX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+  const dx = currentX - startX;
+  previewCard.style.transform = `translateX(${dx}px) rotate(${dx/15}deg)`;
+}
+
+function onDragEnd(e) {
+  if (!isDragging) return;
+  isDragging = false;
+  const dx = (e.type.startsWith('touch') ? e.changedTouches[0].clientX : e.clientX) - startX;
+  const threshold = 100;
+  if (dx < -threshold) {
+    // Vuốt trái: sang lá mới (deck tiến tới)
+    previewCard.style.transition = 'transform 0.35s cubic-bezier(.4,2,.6,1)';
+    previewCard.style.transform = `translateX(-1000px) rotate(-15deg)`;
+    setTimeout(() => {
+      const swiped = deck.shift();
+      deck.push(swiped);
+      previewCard.style.transition = '';
+      previewCard.style.transform = '';
+      renderTopCards();
+    }, 350);
+  } else if (dx > threshold) {
+    // Vuốt phải: quay lại lá trước (deck lùi lại)
+    previewCard.style.transition = 'transform 0.35s cubic-bezier(.4,2,.6,1)';
+    previewCard.style.transform = `translateX(1000px) rotate(15deg)`;
+    setTimeout(() => {
+      const last = deck.pop();
+      deck.unshift(last);
+      previewCard.style.transition = '';
+      previewCard.style.transform = '';
+      renderTopCards();
+    }, 350);
+  } else {
+    // Không đủ xa, trả về vị trí cũ
+    previewCard.style.transition = 'transform 0.2s';
+    previewCard.style.transform = '';
+  }
+}
 
 function renderCollection(tag) {
   const collection = getCollection();
   collectionGrid.innerHTML = '';
+
+  // Sinh danh sách tag filter động
+  const tagFilter = document.querySelector('.tag-filter');
+  if (tagFilter) {
+    // Lấy tất cả tag duy nhất từ bộ sưu tập
+    const allTags = Array.from(new Set(collection.flatMap(card => Array.isArray(card.tags) ? card.tags : [])));
+    tagFilter.innerHTML = '';
+    // Luôn có nút 'Tất cả'
+    const allBtn = document.createElement('button');
+    allBtn.className = 'tag-btn';
+    allBtn.dataset.tag = 'all';
+    allBtn.textContent = 'Tất cả';
+    if (tag === 'all') allBtn.classList.add('active');
+    tagFilter.appendChild(allBtn);
+    allBtn.addEventListener('click', () => {
+      document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+      allBtn.classList.add('active');
+      renderCollection('all');
+    });
+    // Thêm các tag còn lại
+    allTags.forEach(t => {
+      const btn = document.createElement('button');
+      btn.className = 'tag-btn';
+      btn.dataset.tag = t;
+      btn.textContent = t;
+      if (tag === t) btn.classList.add('active');
+      tagFilter.appendChild(btn);
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderCollection(t);
+      });
+    });
+  }
+
   let filtered = collection;
   if (tag && tag !== 'all') {
-    filtered = collection.filter(card => card.tags.includes(tag));
+    filtered = collection.filter(card => Array.isArray(card.tags) && card.tags.includes(tag));
   }
   if (filtered.length === 0) {
     collectionGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#aaa;">Chưa có lá bài nào.</p>';
@@ -290,36 +339,114 @@ function renderCollection(tag) {
     div.className = 'card';
     div.style.position = 'relative';
     div.innerHTML = `
-      <img src="${card.img}" alt="img" class="card-img" style="width:60px;height:60px;">
+      <img src="${card.image || card.img}" alt="img" class="card-img" style="width:60px;height:60px;">
       <h3 class="card-title" style="font-size:1rem;">${card.title}</h3>
-      <p class="card-desc" style="font-size:0.95rem;">${card.desc}</p>
-      <ul class="card-examples" style="font-size:0.92rem;">${card.examples.map(e=>`<li>${e}</li>`).join('')}</ul>
+      <p class="card-desc" style="font-size:0.95rem;">${card.description || card.desc || ''}</p>
+      <ul class="card-examples" style="font-size:0.92rem;">${(card.examples||[]).map(e=>`<li>${e}</li>`).join('')}</ul>
     `;
     collectionGrid.appendChild(div);
   });
 }
 
-// Chia sẻ ý tưởng (Facebook, TikTok, Zalo)
-shareBtn.addEventListener('click', () => {
-  if (!currentCard) return;
-  const text = `"${currentCard.title}"\n${currentCard.desc}\nVí dụ: ${currentCard.examples[0]}`;
-  if (navigator.share) {
-    navigator.share({
-      title: currentCard.title,
-      text,
-      url: window.location.href
-    });
-  } else {
-    // Fallback: Facebook share
-    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(text)}`;
-    window.open(fbUrl, '_blank');
-  }
-});
+// Đặt toàn bộ khởi tạo vào DOMContentLoaded
 
-// Đóng modal khi bấm ngoài
-window.addEventListener('click', (e) => {
-  if (e.target === cardModal) cardModal.classList.add('hidden');
-  if (e.target === collectionModal) collectionModal.classList.add('hidden');
+document.addEventListener('DOMContentLoaded', () => {
+  // Khởi tạo quảng cáo
+  updateAdContent();
+
+  // Khi load trang, render 2 lá bài đầu tiên
+  renderTopCards();
+
+  // Gắn event listener cho swipe (chuột + cảm ứng)
+  const previewCardEl = document.getElementById('preview-card');
+  previewCardEl.addEventListener('mousedown', onDragStart);
+  document.addEventListener('mousemove', onDragMove);
+  document.addEventListener('mouseup', onDragEnd);
+  previewCardEl.addEventListener('touchstart', onDragStart, {passive: false});
+  document.addEventListener('touchmove', onDragMove, {passive: false});
+  document.addEventListener('touchend', onDragEnd, {passive: false});
+
+  shuffleBtn.addEventListener('click', () => {
+    updateAdContent(true);
+    playShuffleAnimation(() => {
+      const card = pickRandomCard();
+      updatePreviewCard(card);
+    });
+  });
+
+  // Add event listener for preview heart button
+  // (nút này được render lại mỗi lần updatePreviewCard)
+  // => đã gắn trong updatePreviewCard
+
+  // Initialize heart button state
+  updatePreviewHeartState();
+
+  reshuffleBtn.addEventListener('click', () => {
+    updateAdContent(true);
+    const adLink = getAdAffiliateLink();
+    window.open(adLink, '_blank');
+    playShuffleAnimation(() => {
+      const card = pickRandomCard();
+      showCard(card);
+    });
+  });
+
+  closeModal.addEventListener('click', () => {
+    cardModal.classList.add('hidden');
+  });
+
+  saveBtn.addEventListener('click', () => {
+    if (!currentCard) return;
+    let collection = getCollection();
+    if (!collection.find(c => c.id === currentCard.id)) {
+      collection.push(currentCard);
+      saveCollection(collection);
+      updateSaveBtn();
+    }
+  });
+
+  showCollectionBtn.addEventListener('click', () => {
+    renderCollection('all');
+    collectionModal.classList.remove('hidden');
+  });
+
+  closeCollection.addEventListener('click', () => {
+    collectionModal.classList.add('hidden');
+  });
+
+  tagBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tagBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCollection(btn.dataset.tag);
+    });
+  });
+
+  shareBtn.addEventListener('click', () => {
+    if (!currentCard) return;
+    const text = `"${currentCard.title}"\n${currentCard.description}\nVí dụ: ${currentCard.examples[0]}`;
+    if (navigator.share) {
+      navigator.share({
+        title: currentCard.title,
+        text,
+        url: window.location.href
+      });
+    } else {
+      // Fallback: Facebook share
+      const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(text)}`;
+      window.open(fbUrl, '_blank');
+    }
+  });
+
+  // Đóng modal khi bấm ngoài
+  window.addEventListener('click', (e) => {
+    if (e.target === cardModal) cardModal.classList.add('hidden');
+    if (e.target === collectionModal) collectionModal.classList.add('hidden');
+  });
+
+  // Auto mobile full screen card
+  window.addEventListener('resize', adjustModalWidth);
+  adjustModalWidth();
 });
 
 // Hiệu ứng flip CSS bổ sung
@@ -348,6 +475,4 @@ function adjustModalWidth() {
       el.style.minWidth = '';
     });
   }
-}
-window.addEventListener('resize', adjustModalWidth);
-adjustModalWidth(); 
+} 
