@@ -10,7 +10,9 @@ function saveCollection(arr) {
 }
 
 // DOM
-const drawBtn = document.getElementById('draw-card-btn');
+const shuffleBtn = document.getElementById('shuffle-btn');
+const previewCard = document.getElementById('preview-card');
+const previewHeartBtn = document.getElementById('preview-heart-btn');
 const cardModal = document.getElementById('card-modal');
 const cardFlip = cardModal.querySelector('.card-flip');
 const cardImg = document.getElementById('card-img');
@@ -33,6 +35,71 @@ let shuffleTimeout = null;
 
 function pickRandomCard() {
   return cards[Math.floor(Math.random() * cards.length)];
+}
+
+function updatePreviewCard(card) {
+  currentCard = card;
+  previewCard.innerHTML = `
+    <button class="heart-btn" id="preview-heart-btn">🤍</button>
+    <img src="${card.image || card.img}" alt="Card Image" class="card-img card-img-top">
+    <h2 class="card-title card-title-main">${card.title}</h2>
+    <p class="card-desc card-desc-main">${card.description || card.desc}</p>
+    <div class="card-examples-block">
+      <div class="card-examples-title"><b>Ví dụ:</b></div>
+      <ul class="card-examples">
+        ${(card.examples || []).map(ex => `<li>${ex}</li>`).join('')}
+      </ul>
+    </div>
+    ${card.note ? `<div class="card-note">${card.note}</div>` : ''}
+  `;
+  
+  // Re-attach heart button event listener
+  const newHeartBtn = previewCard.querySelector('#preview-heart-btn');
+  newHeartBtn.addEventListener('click', togglePreviewHeart);
+  
+  // Update heart button state
+  updatePreviewHeartState();
+}
+
+function updatePreviewHeartState() {
+  if (!currentCard) return;
+  const collection = getCollection();
+  const isSaved = collection.find(c => c.id === currentCard.id);
+  const heartBtn = previewCard.querySelector('#preview-heart-btn');
+  
+  if (isSaved) {
+    heartBtn.textContent = '❤️';
+    heartBtn.classList.add('saved');
+  } else {
+    heartBtn.textContent = '🤍';
+    heartBtn.classList.remove('saved');
+  }
+}
+
+function togglePreviewHeart() {
+  if (!currentCard) return;
+  
+  let collection = getCollection();
+  const existingIndex = collection.findIndex(c => c.id === currentCard.id);
+  
+  if (existingIndex !== -1) {
+    // Remove from collection
+    collection.splice(existingIndex, 1);
+    saveCollection(collection);
+  } else {
+    // Add to collection
+    collection.push(currentCard);
+    saveCollection(collection);
+  }
+  
+  updatePreviewHeartState();
+  
+  // Add heart beat animation
+  const heartBtn = previewCard.querySelector('#preview-heart-btn');
+  heartBtn.classList.add('saved');
+  setTimeout(() => {
+    heartBtn.classList.remove('saved');
+  }, 300);
 }
 
 function showCard(card) {
@@ -101,12 +168,18 @@ function playShuffleAnimation(callback) {
   }, 1200);
 }
 
-drawBtn.addEventListener('click', () => {
+shuffleBtn.addEventListener('click', () => {
   playShuffleAnimation(() => {
     const card = pickRandomCard();
-    showCard(card);
+    updatePreviewCard(card);
   });
 });
+
+// Add event listener for preview heart button
+previewHeartBtn.addEventListener('click', togglePreviewHeart);
+
+// Initialize heart button state
+updatePreviewHeartState();
 
 reshuffleBtn.addEventListener('click', () => {
   playShuffleAnimation(() => {

@@ -5,14 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CreatiDeck - Bốc Một Lá</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="background-anim"></div>
   <main class="main-container">
-    <h1 class="site-title">CreatiDeck</h1>
-    <button id="draw-card-btn" class="draw-btn">🃏 Bốc 1 lá bài</button>
-    <p class="caption">Đang bí ý tưởng? Để bộ bài khai sáng bạn!</p>
+    <h1 class="site-title">Ý TƯỞNG MỞ ĐẦU</h1>
+    
+    <!-- Preview Card -->
+    <div class="preview-card" id="preview-card">
+      <button class="heart-btn" id="preview-heart-btn">🤍</button>
+      <img src="/images/cards/card1.png" alt="Card Image" class="card-img card-img-top">
+      <h2 class="card-title card-title-main">How to?</h2>
+      <p class="card-desc card-desc-main">Cách, làm thế nào để làm một điều gì đó.</p>
+      <div class="card-examples-block">
+        <div class="card-examples-title"><b>Ví dụ:</b></div>
+        <ul class="card-examples">
+          <li>Cách để xây dựng 01 trang web chuyên nghiệp từ đầu chỉ trong 30 phút.</li>
+          <li>Cách để học một ngoại ngữ bất kì trong vòng 03 tháng.</li>
+          <li>Làm thế nào để xây một kênh Tiktok đạt 100.000 người theo dõi.</li>
+        </ul>
+      </div>
+      <div class="card-note">Thu hút sự chú ý người xem ngay lập tức bằng câu hỏi và sự tò mò, cho người xem biết được giá trị sẽ nhận đuôc</div>
+    </div>
+    
+    <button id="shuffle-btn" class="shuffle-btn">Tráo bài</button>
     <button id="show-collection-btn" class="collection-btn">❤️ Bộ sưu tập</button>
   </main>
 
