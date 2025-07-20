@@ -10,12 +10,12 @@ export const cards = [
         'Làm thế nào để xây một kênh Tiktok đạt 100.000 người theo dõi.'
       ],
       note: 'Thu hút sự chú ý người xem ngay lập tức bằng câu hỏi và sự tò mò, cho người xem biết được giá trị sẽ nhận đuôc',
-      image: '/images/cards/card1.png',
+      img: 'https://cdn-icons-png.flaticon.com/512/1827/1827933.png',
       tags: ['mở đầu', 'cảm xúc']
     },
     {
       id: '2',
-      img: 'https://cdn-icons-png.flaticon.com/512/3135/3135789.png',
+      img: 'https://cdn-icons-png.flaticon.com/512/2972/2972543.png',
       title: 'Nhanh tay, kẻo hết',
       desc: 'Đưa ra một giới hạn về thời gian/số lượng/địa điểm.',
       examples: [
@@ -28,7 +28,7 @@ export const cards = [
     },
     {
       id: '3',
-      img: 'https://cdn-icons-png.flaticon.com/512/3135/3135768.png',
+      img: 'https://cdn-icons-png.flaticon.com/512/1828/1828640.png',
       title: 'Bạn biết chưa?',
       desc: 'Đặt câu hỏi trong đó có từ "bạn".',
       examples: [
@@ -41,7 +41,7 @@ export const cards = [
     },
     {
       id: '4',
-      img: 'https://cdn-icons-png.flaticon.com/512/3135/3135768.png',
+      img: 'https://cdn-icons-png.flaticon.com/512/1828/1828640.png',
       title: 'Trả lời bình luận tiêu cực',
       desc: 'Đề cập đến 01 câu hỏi hoặc 01 bình luận tiêu cực, sau đó khéo léo trả lời.',
       examples: [
@@ -53,7 +53,7 @@ export const cards = [
     },
     {
       id: '5',
-      img: 'https://cdn-icons-png.flaticon.com/512/3135/3135768.png',
+      img: 'https://cdn-icons-png.flaticon.com/512/1828/1828640.png',
       title: 'Thừa nhận và học từ sai lầm.',
       desc: 'Thừa nhận một nhược điểm của bản thân sau đó chia sẻ bài học.',
       examples: [
@@ -66,7 +66,7 @@ export const cards = [
     }, 
     {
       id: '6',
-      img: 'https://cdn-icons-png.flaticon.com/512/3135/3135768.png',
+      img: 'https://cdn-icons-png.flaticon.com/512/1828/1828640.png',
       title: 'Câu chuyện thành công',
       desc: 'Chia sẻ các câu chuyện thành công của người khác, không phải bạn.',
       examples: [
