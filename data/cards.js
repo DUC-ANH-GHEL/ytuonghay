@@ -96,7 +96,7 @@ export const cards = [
       title: 'Tư duy khó sang dễ',
       desc: 'Xác thực sự hoài nghi/thờ ơ ban đầu của khán giả để xây dựng niềm tin, trước khi chuyển đổi tư duy của họ từ khó sang dễ.',
       examples: [
-        'Tôi chưa bao giờ bận tâm đến thói quen buổi sáng... Cho đến khi thói quen đơn giairn điên rồ này đã thay đổi mọi thứ.',
+        'Tôi chưa bao giờ bận tâm đến thói quen buổi sáng... Cho đến khi thói quen đơn giản điên rồ này đã thay đổi mọi thứ.',
         'Đầu tư chứng khoán khiến tôi cảm thấy quá rủi ro... Nhưng ứng dụng đơn giản này đã giúp tôi bắt đầu một cách an toàn.'
       ],
       note: 'Hiểu rõ được khán giả bạn đang hướng tới, nắm được tư duy, niềm tin hạn chế đang tồn tại trong họ từ trước đến nay để phá bỏ nó',
