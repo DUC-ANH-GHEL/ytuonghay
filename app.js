@@ -241,13 +241,17 @@ let startX = 0;
 let currentX = 0;
 let isDragging = false;
 let isTouchingPreview = false;
+let touchStartX = 0;
+let touchStartY = 0;
+let isHorizontalSwipe = false;
 
 function onDragStart(e) {
   isDragging = true;
   if (e.type.startsWith('touch')) {
     isTouchingPreview = true;
-    // Chặn scroll dọc khi bắt đầu vuốt trên preview card
-    document.body.style.overflow = 'hidden';
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    isHorizontalSwipe = false;
   }
   startX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
   previewCard.style.transition = '';
@@ -260,7 +264,17 @@ function onDragMove(e) {
   previewCard.style.transform = `translateX(${dx}px) rotate(${dx/15}deg)`;
   // Nếu đang swipe ngang trên preview card, chặn scroll dọc
   if (isTouchingPreview && e.type.startsWith('touch')) {
-    e.preventDefault();
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+    // Chỉ chặn scroll dọc nếu swipe ngang rõ rệt
+    if (!isHorizontalSwipe && Math.abs(deltaX) > 10 && Math.abs(deltaX) > Math.abs(deltaY) + 8) {
+      isHorizontalSwipe = true;
+      document.body.style.overflow = 'hidden';
+    }
+    if (isHorizontalSwipe) {
+      e.preventDefault();
+    }
   }
 }
 
@@ -269,7 +283,7 @@ function onDragEnd(e) {
   isDragging = false;
   if (isTouchingPreview) {
     isTouchingPreview = false;
-    // Mở lại scroll dọc sau khi kết thúc swipe
+    isHorizontalSwipe = false;
     document.body.style.overflow = '';
   }
   const dx = (e.type.startsWith('touch') ? e.changedTouches[0].clientX : e.clientX) - startX;
@@ -360,6 +374,96 @@ function renderCollection(tag) {
       <ul class="card-examples" style="font-size:0.92rem;">${(card.examples||[]).map(e=>`<li>${e}</li>`).join('')}</ul>
     `;
     collectionGrid.appendChild(div);
+  });
+}
+
+// Hàm gọi AI Gemini
+async function askGPT(text, prompt) {
+    const apiKey = 'AIzaSyBQ9bQy3HnXMVdAeHo67K-x2TLBE4Hibis';
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
+    const body = {
+      contents: [
+        {
+          role: "user",
+          parts: [
+            { text: prompt + `\n\nBình luận: ${text}` }
+          ]
+        }
+      ]
+    };
+
+    const response = await fetch(`${url}?key=${apiKey}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+
+    const data = await response.json();
+    const result = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "Không rõ";
+    return result.trim().toLowerCase();
+}
+
+// Xử lý AI Suggestion
+const aiInput = document.getElementById('ai-product-desc');
+const aiBtn = document.getElementById('ai-suggest-btn');
+const aiResult = document.getElementById('ai-suggest-result');
+
+if (aiBtn && aiInput && aiResult) {
+  aiBtn.addEventListener('click', async () => {
+    const desc = aiInput.value.trim();
+    if (!desc) {
+      aiResult.textContent = 'Vui lòng nhập mô tả sản phẩm.';
+      aiResult.classList.add('active');
+      return;
+    }
+    aiBtn.disabled = true;
+    aiResult.textContent = 'Đang phân tích AI...';
+    aiResult.classList.add('active');
+    // Prompt cho AI: trả về id hoặc title lá bài phù hợp nhất
+    const prompt = `Bạn là chuyên gia sáng tạo nội dung video viral. Dưới đây là danh sách các ý tưởng (mỗi ý tưởng có id, title, description, tags). Dựa vào mô tả sản phẩm, hãy chọn ra id hoặc title của ý tưởng phù hợp nhất. Chỉ trả về id hoặc title, không giải thích gì thêm.\n\n${cards.map(c => `id: ${c.id}, title: ${c.title}, description: ${c.description || c.desc}` ).join('\n')}`;
+    try {
+      const gptResult = await askGPT(desc, prompt);
+      // Tìm lá bài phù hợp nhất theo id hoặc title
+      let found = null;
+      // So khớp id
+      found = cards.find(c => String(c.id).toLowerCase() === gptResult);
+      // Nếu không, so khớp title
+      if (!found) {
+        found = cards.find(c => c.title.toLowerCase() === gptResult);
+      }
+      // Nếu không, thử tìm gần đúng
+      if (!found) {
+        found = cards.find(c => gptResult.includes(String(c.id).toLowerCase()) || gptResult.includes(c.title.toLowerCase()));
+      }
+      if (found) {
+        // Đưa lá bài này lên đầu deck và cập nhật preview card
+        const idx = deck.findIndex(id => String(id) === String(found.id));
+        if (idx > 0) {
+          deck.splice(idx, 1);
+          deck.unshift(found.id);
+        } else if (idx === -1) {
+          deck.unshift(found.id);
+        }
+        renderTopCards();
+        aiResult.textContent = 'Đã gợi ý ý tưởng phù hợp!';
+        aiResult.classList.add('active');
+        // Cuộn lên vị trí bộ bài nếu trên mobile
+        const stack = document.querySelector('.swipe-stack');
+        if (stack && window.innerWidth < 700) {
+          stack.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }
+      } else {
+        aiResult.textContent = 'Không tìm thấy ý tưởng phù hợp.';
+        aiResult.classList.add('active');
+      }
+    } catch (e) {
+      aiResult.textContent = 'Có lỗi khi gọi AI. Vui lòng thử lại.';
+      aiResult.classList.add('active');
+    }
+    aiBtn.disabled = false;
   });
 }
 
