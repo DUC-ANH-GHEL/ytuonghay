@@ -423,7 +423,7 @@ if (aiBtn && aiInput && aiResult) {
     aiResult.textContent = 'Đang phân tích AI...';
     aiResult.classList.add('active');
     // Prompt cho AI: trả về id hoặc title lá bài phù hợp nhất
-    const prompt = `Bạn là chuyên gia sáng tạo nội dung video viral. Dưới đây là danh sách các ý tưởng (mỗi ý tưởng có id, title, description, tags). Dựa vào mô tả sản phẩm, hãy chọn ra id hoặc title của ý tưởng phù hợp nhất. Chỉ trả về id hoặc title, không giải thích gì thêm.\n\n${cards.map(c => `id: ${c.id}, title: ${c.title}, description: ${c.description || c.desc}` ).join('\n')}`;
+    const prompt = `Bạn là chuyên gia sáng tạo nội dung video viral. Dưới đây là danh sách các ý tưởng (mỗi ý tưởng có id, title, description, tags). Dựa vào mô tả sản phẩm, hãy chọn ra id hoặc title và description của ý tưởng phù hợp nhất. Chỉ trả về id hoặc title, không giải thích gì thêm.\n\n${cards.map(c => `id: ${c.id}, title: ${c.title}, description: ${c.description || c.desc}` ).join('\n')}`;
     try {
       const gptResult = await askGPT(desc, prompt);
       // Tìm lá bài phù hợp nhất theo id hoặc title
@@ -490,6 +490,11 @@ document.addEventListener('DOMContentLoaded', () => {
     playShuffleAnimation(() => {
       const card = pickRandomCard();
       updatePreviewCard(card);
+      // Cuộn lên vị trí bộ bài nếu trên mobile
+      const stack = document.querySelector('.swipe-stack');
+      if (stack && window.innerWidth < 700) {
+        stack.scrollIntoView({behavior: 'smooth', block: 'center'});
+      }
     });
   });
 

@@ -49,17 +49,21 @@ body {
 /* Site title */
 .site-title {
   font-family: 'Montserrat', sans-serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 800;
-  margin-bottom: 3rem;
+  font-size: clamp(2.7rem, 7vw, 4.2rem);
+  font-weight: 900;
+  margin-bottom: 3.5rem;
   letter-spacing: -0.02em;
-  color: #ffffff;
+  color: #fff;
   text-align: center;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
+  background: linear-gradient(90deg, #ff9800 0%, #ffd600 25%, #7c4dff 60%, #00e5ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: 0 6px 32px rgba(76,0,128,0.22), 0 2px 8px rgba(0,0,0,0.22), 0 0 8px #fff7, 0 1px 0 #fff;
+  filter: drop-shadow(0 2px 8px #ffd60088);
+  border-radius: 12px;
+  position: relative;
+  z-index: 30;
 }
 
 /* Preview card */
