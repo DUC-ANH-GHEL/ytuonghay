@@ -422,22 +422,50 @@ if (aiBtn && aiInput && aiResult) {
     aiBtn.disabled = true;
     aiResult.textContent = 'Đang phân tích AI...';
     aiResult.classList.add('active');
-    // Prompt cho AI: trả về id hoặc title lá bài phù hợp nhất
-    const prompt = `Bạn là chuyên gia sáng tạo nội dung video viral. Dưới đây là danh sách các ý tưởng (mỗi ý tưởng có id, title, description, tags). Dựa vào mô tả sản phẩm, hãy chọn ra id hoặc title và description của ý tưởng phù hợp nhất. Chỉ trả về id hoặc title, không giải thích gì thêm.\n\n${cards.map(c => `id: ${c.id}, title: ${c.title}, description: ${c.description || c.desc}` ).join('\n')}`;
+    // Prompt cũ:
+    // const prompt = `Bạn là chuyên gia sáng tạo nội dung video viral. Dưới đây là danh sách các ý tưởng mở đầu video viral (mỗi ý tưởng gồm id, title, description, note và ví dụ mẫu). Dựa vào mô tả sản phẩm, hãy:\n\n1. Chọn **duy nhất 1 lá bài phù hợp nhất**.\n2. Dựa theo ý tưởng đó và mô tả sản phẩm, **viết một câu mở đầu video cụ thể, sáng tạo, hấp dẫn, theo đúng phong cách của lá bài đó**.\n3. Trả về đúng 1 dòng theo format sau:  \n   "id hoặc title: [câu mở đầu được viết mới]"\n\n❌ Không trả về giải thích.  \n❌ Không liệt kê nhiều lựa chọn.  \n✅ Chỉ chọn 1 và viết 1 ví dụ cụ thể, đúng ngữ cảnh sản phẩm.\n\nMô tả sản phẩm: "${desc}"\n\nDanh sách lá bài:\n${cards.map(c => `id: ${c.id}, title: ${c.title}, description: ${c.description || c.desc}, note: ${c.note}, examples: ${c.examples?.join(' | ') || '[]'}`).join('\n')}`;
+    // Prompt mới:
+    const prompt = `Bạn là chuyên gia sáng tạo nội dung video viral. Dưới đây là danh sách các ý tưởng mở đầu video viral (mỗi ý tưởng gồm id, title, description, note và ví dụ mẫu). Dựa vào mô tả sản phẩm, hãy:\n\n1. Chọn **duy nhất 1 lá bài phù hợp nhất**.\n2. Dựa theo ý tưởng đó và mô tả sản phẩm, **viết một câu mở đầu video cụ thể, sáng tạo, hấp dẫn, theo đúng phong cách của lá bài đó**.\n3. Trả về đúng 1 dòng theo format sau:  \n   "id hoặc title: [câu mở đầu được viết mới]"\n\n❌ Không trả về giải thích.  \n❌ Không liệt kê nhiều lựa chọn.  \n✅ Chỉ chọn 1 và viết 1 ví dụ cụ thể, đúng ngữ cảnh sản phẩm.\n\nMô tả sản phẩm: "${desc}"\n\nDanh sách lá bài:\n${cards.map(c => `id: ${c.id}, title: ${c.title}, description: ${c.description || c.desc}, note: ${c.note}, examples: ${c.examples?.join(' | ') || '[]'}`).join('\n')}`;
     try {
       const gptResult = await askGPT(desc, prompt);
-      // Tìm lá bài phù hợp nhất theo id hoặc title
+      // DEBUG: log kết quả AI
+      console.log('gptResult:', gptResult);
+      // Lấy dòng đầu tiên có dấu : làm ví dụ cụ thể
+      let aiIntro = '';
+      let aiKey = '';
+      let firstLine = gptResult.split('\n').find(line => line.includes(':'));
+      if (firstLine) {
+        const match = firstLine.match(/^(.+?):\s*(.+)$/);
+        if (match) {
+          aiKey = match[1].trim();
+          aiIntro = match[2].trim();
+        }
+      }
+      console.log('aiKey:', aiKey, 'aiIntro:', aiIntro);
+      
+      // ƯU TIÊN HIỂN THỊ CÂU VÍ DỤ NGAY LẬP TỨC
+      setTimeout(() => {
+        const aiDiv = document.getElementById('ai-intro-suggest');
+        if (aiDiv) {
+          if (aiIntro) {
+            aiDiv.innerHTML = `<span style='font-size:1.1em;'>💡 <b>Câu mở đầu gợi ý:</b></span><br>${aiIntro}`;
+          } else {
+            aiDiv.innerHTML = `<span style='font-size:1.1em;'>💡 <b>Kết quả AI (full):</b></span><br>${gptResult}`;
+          }
+          aiDiv.classList.add('active');
+        }
+      }, 100);
+
+      // Tìm lá bài phù hợp nhất (cải thiện logic)
       let found = null;
-      // So khớp id
-      found = cards.find(c => String(c.id).toLowerCase() === gptResult);
-      // Nếu không, so khớp title
-      if (!found) {
-        found = cards.find(c => c.title.toLowerCase() === gptResult);
+      if (aiKey) {
+        found = cards.find(c => aiKey.toLowerCase().includes(String(c.id).toLowerCase()) || aiKey.toLowerCase().includes(c.title.toLowerCase()));
       }
-      // Nếu không, thử tìm gần đúng
       if (!found) {
-        found = cards.find(c => gptResult.includes(String(c.id).toLowerCase()) || gptResult.includes(c.title.toLowerCase()));
+        // Thử tìm lại trong toàn bộ kết quả nếu key không khớp
+        found = cards.find(c => gptResult.toLowerCase().includes(c.title.toLowerCase()));
       }
+      
       if (found) {
         // Đưa lá bài này lên đầu deck và cập nhật preview card
         const idx = deck.findIndex(id => String(id) === String(found.id));
@@ -448,26 +476,23 @@ if (aiBtn && aiInput && aiResult) {
           deck.unshift(found.id);
         }
         renderTopCards();
-        aiResult.textContent = 'Đã gợi ý ý tưởng phù hợp!';
-        aiResult.classList.add('active');
+        aiResult.innerHTML = 'Đã gợi ý ý tưởng phù hợp!';
         // Cuộn lên vị trí bộ bài nếu trên mobile
         const stack = document.querySelector('.swipe-stack');
         if (stack && window.innerWidth < 700) {
           stack.scrollIntoView({behavior: 'smooth', block: 'center'});
         }
       } else {
-        aiResult.textContent = 'Không tìm thấy ý tưởng phù hợp.';
-        aiResult.classList.add('active');
+        aiResult.textContent = 'Không tìm thấy lá bài, nhưng đây là gợi ý của AI:';
       }
+      aiResult.classList.add('active');
     } catch (e) {
       aiResult.textContent = 'Có lỗi khi gọi AI. Vui lòng thử lại.';
       aiResult.classList.add('active');
     }
     aiBtn.disabled = false;
   });
-}
-
-// Đặt toàn bộ khởi tạo vào DOMContentLoaded
+}// Đặt toàn bộ khởi tạo vào DOMContentLoaded
 
 document.addEventListener('DOMContentLoaded', () => {
   // Khởi tạo quảng cáo
@@ -600,3 +625,4 @@ function adjustModalWidth() {
     });
   }
 } 
+
