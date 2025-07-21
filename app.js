@@ -390,7 +390,8 @@ function renderCollection(tag) {
 
 // Hàm gọi AI Gemini
 async function askGPT(text, prompt) {
-    const apiKey = 'AIzaSyBQ9bQy3HnXMVdAeHo67K-x2TLBE4Hibis';
+    // const apiKey = 'AIzaSyBQ9bQy3HnXMVdAeHo67K-x2TLBE4Hibis';
+    const apiKey = 'AIzaSyCJtsERcSIYdBnOvUWpL7Ca9BGuOGUOxEs';
     const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
     const body = {
@@ -441,7 +442,34 @@ if (aiBtn && aiInput && aiResult) {
     aiBtn.disabled = true;
     aiResult.textContent = 'Đang phân tích AI...';
     aiResult.classList.add('active');
-    const prompt = `Bạn là chuyên gia sáng tạo nội dung video viral. Dưới đây là danh sách các ý tưởng mở đầu video viral (mỗi ý tưởng gồm id, title, description, note và ví dụ mẫu). Dựa vào mô tả sản phẩm, hãy:\n\n1. Chọn **duy nhất 1 lá bài phù hợp nhất với ngữ cảnh mô tả sản phẩm, mục đích để tạo được đoạn hook đầu của video đạt mức viral nhất có thể, lưu ý phải đọc toàn kỹ toàn bộ các lá bài để phân tích thật sâu sau đó mới đưa ra kết quả cuối cùng, không được chọn bừa 1 lá ở gần**.\n2. Dựa theo ý tưởng đó và mô tả sản phẩm, **viết một câu mở đầu video cụ thể, sáng tạo, hấp dẫn, theo đúng phong cách của lá bài đó**.\n3. Trả về đúng 1 dòng theo format sau:  \n   "id"\n\n❌ Không trả về giải thích.  \n❌ Không liệt kê nhiều lựa chọn.  \n✅ Chỉ chọn 1 và viết 1 ví dụ cụ thể, đúng ngữ cảnh sản phẩm.\n\nMô tả sản phẩm: "${desc}"\n\nDanh sách lá bài:\n${filteredCards.map(c => `id: ${c.id}, title: ${c.title}, description: ${c.description || c.desc}, note: ${c.note}, examples: ${c.examples?.join(' | ') || '[]'}`).join('\n')}`;
+
+const prompt = `Bạn là chuyên gia sáng tạo nội dung video viral. Dưới đây là danh sách các ý tưởng mở đầu video viral (mỗi ý tưởng gồm id, title, description, note và ví dụ mẫu).
+
+🎯 Yêu cầu của bạn là:
+1. Đọc kỹ toàn bộ danh sách lá bài bên dưới — không được chọn bừa hay ưu tiên lá ở đầu.
+2. Chọn **duy nhất 1 lá bài phù hợp nhất** với mô tả sản phẩm, có khả năng tạo đoạn mở đầu thu hút người xem ngay từ 3 giây đầu tiên.
+3. Dựa vào lá bài đó và mô tả sản phẩm, **viết ra một ví dụ cụ thể – là một câu mở đầu video hấp dẫn, đúng tinh thần của lá bài đó**.
+
+📌 Format trả về bắt buộc:
+[dòng 1]: id của lá bài (chỉ ghi id, không thêm chữ, không title)
+[dòng 2]: câu ví dụ mở đầu cụ thể được viết mới theo sản phẩm
+
+⛔ Không trả lời giải thích.  
+⛔ Không liệt kê các ý tưởng khác.  
+✅ Luôn luôn trả ra đúng 2 dòng như trên, không được thiếu dòng nào.
+
+---
+
+📦 Mô tả sản phẩm:
+"${desc}"
+
+🧠 Danh sách lá bài:
+${filteredCards.map(c => 
+  `id: ${c.id}, title: ${c.title}, description: ${c.description || c.desc}, note: ${c.note}, examples: ${c.examples?.join(' | ') || '[]'}`
+).join('\n')}
+`
+
+
     try {
       const gptResult = await askGPT(desc, prompt);
       // DEBUG: log kết quả AI
