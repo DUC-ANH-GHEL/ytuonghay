@@ -441,21 +441,18 @@ if (aiBtn && aiInput && aiResult) {
     aiBtn.disabled = true;
     aiResult.textContent = 'Đang phân tích AI...';
     aiResult.classList.add('active');
-    const prompt = `Bạn là chuyên gia sáng tạo nội dung video viral. Dưới đây là danh sách các ý tưởng mở đầu video viral (mỗi ý tưởng gồm id, title, description, note và ví dụ mẫu). Dựa vào mô tả sản phẩm, hãy:\n\n1. Chọn **duy nhất 1 lá bài phù hợp nhất với ngữ cảnh mô tả sản phẩm, mục đích để tạo được đoạn hook đầu của video đạt mức viral nhất có thể, lưu ý phải đọc toàn kỹ toàn bộ các lá bài để phân tích thật sâu sau đó mới đưa ra kết quả cuối cùng, không được chọn bừa 1 lá ở gần**.\n2. Dựa theo ý tưởng đó và mô tả sản phẩm, **viết một câu mở đầu video cụ thể, sáng tạo, hấp dẫn, theo đúng phong cách của lá bài đó**.\n3. Trả về đúng 1 dòng theo format sau:  \n   "id hoặc title: [câu mở đầu được viết mới]"\n\n❌ Không trả về giải thích.  \n❌ Không liệt kê nhiều lựa chọn.  \n✅ Chỉ chọn 1 và viết 1 ví dụ cụ thể, đúng ngữ cảnh sản phẩm.\n\nMô tả sản phẩm: "${desc}"\n\nDanh sách lá bài:\n${filteredCards.map(c => `id: ${c.id}, title: ${c.title}, description: ${c.description || c.desc}, note: ${c.note}, examples: ${c.examples?.join(' | ') || '[]'}`).join('\n')}`;
+    const prompt = `Bạn là chuyên gia sáng tạo nội dung video viral. Dưới đây là danh sách các ý tưởng mở đầu video viral (mỗi ý tưởng gồm id, title, description, note và ví dụ mẫu). Dựa vào mô tả sản phẩm, hãy:\n\n1. Chọn **duy nhất 1 lá bài phù hợp nhất với ngữ cảnh mô tả sản phẩm, mục đích để tạo được đoạn hook đầu của video đạt mức viral nhất có thể, lưu ý phải đọc toàn kỹ toàn bộ các lá bài để phân tích thật sâu sau đó mới đưa ra kết quả cuối cùng, không được chọn bừa 1 lá ở gần**.\n2. Dựa theo ý tưởng đó và mô tả sản phẩm, **viết một câu mở đầu video cụ thể, sáng tạo, hấp dẫn, theo đúng phong cách của lá bài đó**.\n3. Trả về đúng 1 dòng theo format sau:  \n   "id"\n\n❌ Không trả về giải thích.  \n❌ Không liệt kê nhiều lựa chọn.  \n✅ Chỉ chọn 1 và viết 1 ví dụ cụ thể, đúng ngữ cảnh sản phẩm.\n\nMô tả sản phẩm: "${desc}"\n\nDanh sách lá bài:\n${filteredCards.map(c => `id: ${c.id}, title: ${c.title}, description: ${c.description || c.desc}, note: ${c.note}, examples: ${c.examples?.join(' | ') || '[]'}`).join('\n')}`;
     try {
       const gptResult = await askGPT(desc, prompt);
       // DEBUG: log kết quả AI
       console.log('gptResult:', gptResult);
-      // Lấy dòng đầu tiên có dấu : làm ví dụ cụ thể
-      let aiIntro = '';
+      // Lấy dòng đầu tiên không rỗng làm id, dòng tiếp theo (nếu có) làm ví dụ
       let aiKey = '';
-      let firstLine = gptResult.split('\n').find(line => line.includes(':'));
-      if (firstLine) {
-        const match = firstLine.match(/^(.+?):\s*(.+)$/);
-        if (match) {
-          aiKey = match[1].trim();
-          aiIntro = match[2].trim();
-        }
+      let aiIntro = '';
+      let lines = gptResult.split('\n').filter(line => line.trim() !== '');
+      if (lines.length > 0) {
+        aiKey = lines[0].trim();
+        if (lines.length > 1) aiIntro = lines[1].trim();
       }
       console.log('aiKey:', aiKey, 'aiIntro:', aiIntro);
       setTimeout(() => {
@@ -469,17 +466,10 @@ if (aiBtn && aiInput && aiResult) {
           aiDiv.classList.add('active');
         }
       }, 100);
-      // Sau khi nhận kết quả từ AI, tìm lá bài phù hợp trong toàn bộ cards
+      // Sau khi nhận kết quả từ AI, tìm lá bài theo id trong toàn bộ cards
       let found = null;
       if (aiKey) {
-        const candidates = cards.filter(c => (
-          aiKey.toLowerCase().includes(String(c.id).toLowerCase()) || aiKey.toLowerCase().includes(c.title.toLowerCase())
-        ));
-        found = candidates.length > 0 ? candidates[0] : null;
-      }
-      if (!found) {
-        const candidates = cards.filter(c => gptResult.toLowerCase().includes(c.title.toLowerCase()));
-        found = candidates.length > 0 ? candidates[0] : null;
+        found = cards.find(c => String(c.id) === aiKey);
       }
       if (!found) {
         aiResult.textContent = 'Không tìm thấy lá bài phù hợp.';
