@@ -240,9 +240,15 @@ function renderTopCards() {
 let startX = 0;
 let currentX = 0;
 let isDragging = false;
+let isTouchingPreview = false;
 
 function onDragStart(e) {
   isDragging = true;
+  if (e.type.startsWith('touch')) {
+    isTouchingPreview = true;
+    // Chặn scroll dọc khi bắt đầu vuốt trên preview card
+    document.body.style.overflow = 'hidden';
+  }
   startX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
   previewCard.style.transition = '';
 }
@@ -252,11 +258,20 @@ function onDragMove(e) {
   currentX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
   const dx = currentX - startX;
   previewCard.style.transform = `translateX(${dx}px) rotate(${dx/15}deg)`;
+  // Nếu đang swipe ngang trên preview card, chặn scroll dọc
+  if (isTouchingPreview && e.type.startsWith('touch')) {
+    e.preventDefault();
+  }
 }
 
 function onDragEnd(e) {
   if (!isDragging) return;
   isDragging = false;
+  if (isTouchingPreview) {
+    isTouchingPreview = false;
+    // Mở lại scroll dọc sau khi kết thúc swipe
+    document.body.style.overflow = '';
+  }
   const dx = (e.type.startsWith('touch') ? e.changedTouches[0].clientX : e.clientX) - startX;
   const threshold = 100;
   if (dx < -threshold) {
