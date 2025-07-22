@@ -74,76 +74,89 @@ export const adVariants = [
   },
   {
     id: 2,
-    name: 'Kính mắt nam',
+    name: 'Van cảm biến áp suất lốp',
     header: {
-      title: 'Shopee Fashion',
-      product: 'Kính mắt nam cao cấp',
-      description: 'Phong cách đàn ông hiện đại',
+      title: 'Shopee Gia Dụng',
+      product: 'Van cảm biến áp suất lốp',
+      description: 'Giữ an toàn – Tiết kiệm nhiên liệu – Bảo vệ lốp xe!',
       cta: 'Khám phá',
-      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997400/kinh_j3e0kn.webp',
-      link: 'https://s.shopee.vn/gFEWr4DF0'
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1753153460/van_ybbxo1.webp',
+      link: 'https://s.shopee.vn/5L170QBW4A'
     },
+  
+    // 🔥 content section – nhấn mạnh ưu đãi và đa năng
     content: {
-      title: 'Hot Sale',
-      product: 'Kính mắt nam cao cấp',
-      description: 'Giảm giá sốc 70%',
+      title: 'Phù hợp xe máy & ô tô',
+      product: 'Van cảm biến áp suất lốp',
+      description: 'Giảm giá cực sâu – Bảo vệ lốp mọi phương tiện',
       cta: 'Mua ngay',
-      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997400/kinh_j3e0kn.webp',
-      link: 'https://s.shopee.vn/gFEWr4DF0'
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1753153460/van_ybbxo1.webp',
+      link: 'https://s.shopee.vn/5L170QBW4A'
     },
+  
+    // 📌 sidebar – nhấn vào sự tiện lợi & phổ thông
     sidebar: {
-      title: 'Thời trang nam',
-      product: 'Kính mắt nam cao cấp',
-      description: 'Chất lượng đảm bảo',
-      cta: 'Xem thêm',
-      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
-      link: 'https://s.shopee.vn/gFEWr4DF0'
+      title: 'Dành cho mọi loại xe',
+      product: 'Van cảm biến áp suất lốp',
+      description: 'Gắn được cho cả xe máy & ô tô',
+      cta: 'Xem chi tiết',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1753153460/van_ybbxo1.webp',
+      link: 'https://s.shopee.vn/5L170QBW4A'
     },
+  
+    // 🚗 footer – chốt chặn thông điệp “ai cũng nên có”
     footer: {
-      title: 'Shopee - Thời trang nam',
-      product: 'Kính mắt nam cao cấp',
-      description: 'Phong cách đàn ông thành đạt',
-      cta: 'Truy cập',
-      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
-      link: 'https://s.shopee.vn/gFEWr4DF0'
+      title: 'Shopee - Bảo vệ lốp xe thông minh',
+      product: 'Van cảm biến áp suất lốp',
+      description: 'Lựa chọn an toàn cho mọi phương tiện',
+      cta: 'Truy cập ngay',
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1753153460/van_ybbxo1.webp',
+      link: 'https://s.shopee.vn/5L170QBW4A'
     }
   },
   {
     id: 3,
-    name: 'Kính mắt nữ',
+    name: 'Cây lau bàn bếp',
     header: {
-      title: 'Shopee Beauty',
-      product: 'Kính mắt nữ thời trang',
-      description: 'Làm đẹp mỗi ngày',
+      title: 'Shopee House',
+      product: 'Cây lau bàn bếp thông minh',
+      description: 'Cây Lau Bàn Bếp Tự Vắt Mini Đa Năng Bọt Biển Thấm Hút Thông Minh, Dụng Cụ Lau Dọn Gấp Gọn',
       cta: 'Mua sắm',
-      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
-      link: 'https://s.shopee.vn/gFEWr4DF0'
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1753153817/lau_keleva.webp',
+      link: 'https://s.shopee.vn/2LNVRRhqGO'
     },
+  
+    // ✨ content – nhấn tiện ích & giảm giá
     content: {
-      title: 'Beauty Sale',
-      product: 'Kính mắt nữ thời trang',
-      description: 'Giảm đến 80%',
+      title: 'Nhà sạch – Bếp gọn',
+      product: 'Cây lau bàn bếp thông minh',
+      description: 'Giảm 40% – Lau sạch mọi ngóc ngách',
       cta: 'Xem ngay',
-      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997400/kinh_j3e0kn.webp',
-      link: 'https://s.shopee.vn/gFEWr4DF0'
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1753153817/lau_keleva.webp',
+      link: 'https://s.shopee.vn/2LNVRRhqGO'
     },
+  
+    // 🧽 sidebar – nhấn vào nhỏ gọn, dễ dùng
     sidebar: {
-      title: 'Làm đẹp',
-      product: 'Kính mắt nữ thời trang',
-      description: 'Tặng kèm khăn lau',
+      title: 'Gọn nhẹ – Tiện lợi',
+      product: 'Cây lau bàn bếp thông minh',
+      description: 'Gấp gọn – Tự vắt – Siêu thấm hút',
       cta: 'Khám phá',
-      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
-      link: 'https://s.shopee.vn/gFEWr4DF0'
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1753153817/lau_keleva.webp',
+      link: 'https://s.shopee.vn/2LNVRRhqGO'
     },
+  
+    // 🏠 footer – chốt điểm nâng cấp không gian bếp
     footer: {
-      title: 'Shopee - Làm đẹp',
-      product: 'Kính mắt nữ thời trang',
-      description: 'Nâng tầm vẻ đẹp của bạn',
+      title: 'Shopee - Dọn bếp không lo bẩn tay',
+      product: 'Cây lau bàn bếp thông minh',
+      description: 'Giải pháp lau dọn thế hệ mới',
       cta: 'Truy cập ngay',
-      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1752997383/kinh_hcgygs.webp',
-      link: 'https://s.shopee.vn/gFEWr4DF0'
+      icon: 'https://res.cloudinary.com/diwxfpt92/image/upload/v1753153817/lau_keleva.webp',
+      link: 'https://s.shopee.vn/2LNVRRhqGO'
     }
   }
+  
 ];
 
 // Lưu lịch sử ad variant đã hiển thị trong localStorage
