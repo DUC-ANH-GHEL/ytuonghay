@@ -390,32 +390,23 @@ function renderCollection(tag) {
 
 // Hàm gọi AI Gemini
 async function askGPT(text, prompt) {
-    // const apiKey = 'AIzaSyBQ9bQy3HnXMVdAeHo67K-x2TLBE4Hibis';
-    const apiKey = 'AIzaSyCJtsERcSIYdBnOvUWpL7Ca9BGuOGUOxEs';
-    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
-
-    const body = {
-      contents: [
-        {
-          role: "user",
-          parts: [
-            { text: prompt + `\n\nBình luận: ${text}` }
-          ]
-        }
-      ]
-    };
-
-    const response = await fetch(`${url}?key=${apiKey}`, {
-      method: "POST",
+  const url = 'https://api.thietbithuyluc.shop/api/v1/gemini/ask';
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'accept': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify({ text, prompt })
     });
-
+    if (!response.ok) throw new Error('API error');
     const data = await response.json();
-    const result = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "Không rõ";
-    return result.trim().toLowerCase();
+    // Giả sử kết quả trả về là { result: '...' }
+    return data.result || '';
+  } catch (e) {
+    return 'Lỗi gọi AI: ' + e.message;
+  }
 }
 
 // Xử lý AI Suggestion
