@@ -89,18 +89,35 @@ function pickRandomCard() {
   return randomCard;
 }
 
+// function updatePreviewCard(card, el = previewCard) {
+//   el.innerHTML = `
+//     <button class="heart-btn" id="preview-heart-btn">🤍</button>
+//     <img src="${card.image || card.img}" alt="Card Image" class="card-img card-img-top">
+//     <h2 class="card-title card-title-main">${card.title}</h2>
+//     <p class="card-desc card-desc-main">${card.description || card.desc}</p>
+//     <div class="card-examples-block">
+//       <div class="card-examples-title"><b>Ví dụ:</b></div>
+//       <ul class="card-examples">
+//         ${(card.examples || []).map(ex => `<li>${ex}</li>`).join('')}
+//       </ul>
+//     </div>
+//     ${card.note ? `<div class="card-note">${card.note}</div>` : ''}
+//   `;
+//   // Chỉ gắn event heart cho lá trên cùng
+//   if (el.id === 'preview-card') {
+//     const newHeartBtn = el.querySelector('#preview-heart-btn');
+//     newHeartBtn.addEventListener('click', togglePreviewHeart);
+//     updatePreviewHeartState();
+//   }
+// }
+
 function updatePreviewCard(card, el = previewCard) {
   el.innerHTML = `
     <button class="heart-btn" id="preview-heart-btn">🤍</button>
     <img src="${card.image || card.img}" alt="Card Image" class="card-img card-img-top">
     <h2 class="card-title card-title-main">${card.title}</h2>
     <p class="card-desc card-desc-main">${card.description || card.desc}</p>
-    <div class="card-examples-block">
-      <div class="card-examples-title"><b>Ví dụ:</b></div>
-      <ul class="card-examples">
-        ${(card.examples || []).map(ex => `<li>${ex}</li>`).join('')}
-      </ul>
-    </div>
+   
     ${card.note ? `<div class="card-note">${card.note}</div>` : ''}
   `;
   // Chỉ gắn event heart cho lá trên cùng
